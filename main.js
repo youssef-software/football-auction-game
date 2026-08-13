@@ -657,16 +657,39 @@ function nextHiddenTurn() {
     currentVisiblePlayer = shuffledDb[0]; currentHiddenPlayer = shuffledDb[1];
     visibleName.innerText = currentVisiblePlayer;
 }
+let isCardLocked = false;
 
-visibleCard.onclick = () => { addPlayerToSquad(currentVisiblePlayer); };
+visibleCard.onclick = () => { 
+    if (isCardLocked) return; 
+    isCardLocked = true; 
+    
+    hiddenCard.classList.remove('mystery'); 
+    hiddenCard.classList.add('revealed'); 
+    hiddenName.innerText = currentHiddenPlayer;
+    
+    setTimeout(() => { 
+        addPlayerToSquad(currentVisiblePlayer); 
+    }, 1500); 
+};
+
 hiddenCard.onclick = () => {
-    hiddenCard.classList.remove('mystery'); hiddenCard.classList.add('revealed'); hiddenName.innerText = currentHiddenPlayer;
-    setTimeout(() => { addPlayerToSquad(currentHiddenPlayer); }, 1000);
+    if (isCardLocked) return;
+    isCardLocked = true;
+
+    hiddenCard.classList.remove('mystery'); 
+    hiddenCard.classList.add('revealed'); 
+    hiddenName.innerText = currentHiddenPlayer;
+    
+    setTimeout(() => { 
+        addPlayerToSquad(currentHiddenPlayer); 
+    }, 1000);
 };
 
 function addPlayerToSquad(player) {
     if (currentTurnName === p1Name) { p1Squad[currentNeededPos].push(player); currentTurnName = p2Name; } 
     else { p2Squad[currentNeededPos].push(player); currentTurnName = p1Name; }
+    
+    isCardLocked = false; 
     nextHiddenTurn();
 }
 
