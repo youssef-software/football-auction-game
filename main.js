@@ -318,13 +318,21 @@ const topStars = [
   "نيمار جونيور"
 ];
 
+// قائمة نجوم الصف الثاني
+const midStars = [
+    "ديفيد رايا", "جريجور كوبيل", "أليسون", "كورتوا", "ياسين بونو",
+    "أشرف حكيمي", "ماركينيوس", "دياز", "بيدري", "رودري", "كانتي", 
+    "فينيسيوس", "ساكا", "نيمار"
+];
+
 function simulateMatchResult(squad1, squad2) {
     const calculatePower = (squad) => {
         let power = 0;
         ['GK','DEF','MID','FWD'].forEach(pos => {
             squad[pos].forEach(player => {
-                power += Math.floor(Math.random() * 4) + 6;
-                if(topStars.includes(player)) power += 15;
+                power += Math.floor(Math.random() * 4) + 6; // اللاعب العادي
+                if(topStars.includes(player)) power += 15; // الأسطورة
+                else if(midStars.includes(player)) power += 8; // النجم الممتاز
             });
         });
         return power;
@@ -587,6 +595,8 @@ let aucPlayerCount = 5; let aucType = "public";
 let auctionPositions = []; let currentAucIndex = 0;
 let currentAucRevealedPlayer = ""; let currentAucPosition = "";
 let aucSquadP1 = { GK: [], DEF: [], MID: [], FWD: [] }; let aucSquadP2 = { GK: [], DEF: [], MID: [], FWD: [] };
+// سلات مؤقتة لمنع التكرار في المزاد
+let aucAvailGK = []; let aucAvailDEF = []; let aucAvailMID = []; let aucAvailFWD = [];
 
 // متغيرات كروت المزاد
 const allAucCards = ["+30 مليون", "+40 مليون", "+50 مليون", "خصم 50%", "ضرائب -70M", "منع المزايدة", "سرقة اللاعب"];
@@ -619,6 +629,8 @@ document.getElementById('start-auction-action').addEventListener('click', () => 
     
     aucSquadP1 = { GK: [], DEF: [], MID: [], FWD: [] }; aucSquadP2 = { GK: [], DEF: [], MID: [], FWD: [] };
     currentAucIndex = 0;
+    // إعادة تعبئة قوائم المزاد
+    aucAvailGK = [...dbGK]; aucAvailDEF = [...dbDEF]; aucAvailMID = [...dbMID]; aucAvailFWD = [...dbFWD];
     
     // توزيع كروت المزاد
     let shuffled = [...allAucCards].sort(() => 0.5 - Math.random()); aucP1Cards = shuffled.slice(0, 3);
@@ -692,16 +704,27 @@ function nextAuctionTurn() {
     document.getElementById('bidding-area').classList.remove('hidden');
     
     currentAucPosition = auctionPositions[currentAucIndex];
-    let dbToUse = []; let posNameAR = "";
+   let dbToUse = null; let posNameAR = "";
     
-    if (currentAucPosition === "GK") { dbToUse = dbGK; posNameAR = "حارس مرمى"; }
-    if (currentAucPosition === "DEF") { dbToUse = dbDEF; posNameAR = "مدافع"; }
-    if (currentAucPosition === "MID") { dbToUse = dbMID; posNameAR = "خط وسط"; }
-    if (currentAucPosition === "FWD") { dbToUse = dbFWD; posNameAR = "مهاجم"; }
+    if (currentAucPosition === "GK") { dbToUse = aucAvailGK; posNameAR = "حارس مرمى"; }
+    if (currentAucPosition === "DEF") { dbToUse = aucAvailDEF; posNameAR = "مدافع"; }
+    if (currentAucPosition === "MID") { dbToUse = aucAvailMID; posNameAR = "خط وسط"; }
+    if (currentAucPosition === "FWD") { dbToUse = aucAvailFWD; posNameAR = "مهاجم"; }
+
+    // إعادة التعبئة إذا القائمة فضيت
+    if (dbToUse.length === 0) {
+        if (currentAucPosition === "GK") dbToUse.push(...dbGK);
+        if (currentAucPosition === "DEF") dbToUse.push(...dbDEF);
+        if (currentAucPosition === "MID") dbToUse.push(...dbMID);
+        if (currentAucPosition === "FWD") dbToUse.push(...dbFWD);
+    }
 
     document.getElementById('auc-position-text').innerText = `المركز: ${posNameAR} (${currentAucIndex + 1}/${auctionPositions.length})`;
-    const shuffledDb = [...dbToUse].sort(() => 0.5 - Math.random());
-    currentAucRevealedPlayer = shuffledDb[0];
+    
+    // سحب وحذف من السلة لمنع التكرار
+    const rIndex = Math.floor(Math.random() * dbToUse.length);
+    currentAucRevealedPlayer = dbToUse.splice(rIndex, 1)[0];
+    
     document.getElementById('auc-player-name').innerText = currentAucRevealedPlayer;
 
     if (aucType === "hidden") {
@@ -765,13 +788,22 @@ function validateSingleBid(bidVal, budget) {
 }
 
 function processAuctionResult(bid1, bid2) {
-    let dbToUse = [];
-    if (currentAucPosition === "GK") dbToUse = dbGK;
-    if (currentAucPosition === "DEF") dbToUse = dbDEF;
-    if (currentAucPosition === "MID") dbToUse = dbMID;
-    if (currentAucPosition === "FWD") dbToUse = dbFWD;
+   let dbToUse = null;
+    if (currentAucPosition === "GK") dbToUse = aucAvailGK;
+    if (currentAucPosition === "DEF") dbToUse = aucAvailDEF;
+    if (currentAucPosition === "MID") dbToUse = aucAvailMID;
+    if (currentAucPosition === "FWD") dbToUse = aucAvailFWD;
     
-    const randomFallback = dbToUse.filter(p => p !== currentAucRevealedPlayer).sort(() => 0.5 - Math.random())[0];
+    if (dbToUse.length === 0) {
+        if (currentAucPosition === "GK") dbToUse.push(...dbGK);
+        if (currentAucPosition === "DEF") dbToUse.push(...dbDEF);
+        if (currentAucPosition === "MID") dbToUse.push(...dbMID);
+        if (currentAucPosition === "FWD") dbToUse.push(...dbFWD);
+    }
+    
+    // سحب وحذف العشوائي لمنع تكراره أيضاً
+    const fIndex = Math.floor(Math.random() * dbToUse.length);
+    const randomFallback = dbToUse.splice(fIndex, 1)[0];
     let p1Wins = (bid1 > bid2);
     
     if (activeAucEffects.p1Guarantee && !activeAucEffects.p2Guarantee) p1Wins = true;

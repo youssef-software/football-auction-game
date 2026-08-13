@@ -665,3 +665,8 @@ h2 {
     margin-bottom: 30px;
     font-size: 2rem;
 }
+/* حل مشكلة اختفاء الكروت في الموبايل */
+#auction-game-screen {
+    overflow-y: auto; /* السماح بالسحب لأعلى وأسفل */
+    padding-bottom: 80px; /* مساحة فارغة في الأسفل لضمان ظهور الكروت بالكامل */
+}
