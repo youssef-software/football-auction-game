@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة المزاد والباكات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- حاوية بحجم شاشة التليفون -->
+    <div class="mobile-container">
+        
+        <!-- القائمة الرئيسية -->
+        <div id="main-menu" class="screen">
+            <h2>اختر طور اللعب</h2>
+            <div class="menu-options">
+                <button class="circle-btn" id="btn-auction">المزايدة</button>
+                <button class="circle-btn" id="btn-guess">من اللاعب</button>
+                <button class="circle-btn" id="btn-packs">الباكات</button>
+                <button class="circle-btn" id="btn-hidden">اللاعب الخفي</button>
+            </div>
+        </div>
+
+      <!-- شاشة إعدادات المزاد -->
+        <div id="auction-screen" class="screen hidden">
+            <button class="back-btn">رجوع</button>
+            <h2>إعدادات المزاد</h2>
+            
+            <div class="auction-settings-container">
+                <!-- إدخال أسماء اللاعبين للمزاد -->
+                <input type="text" id="auc-p1-input" placeholder="اسم اللاعب الأول" class="name-input">
+                <input type="text" id="auc-p2-input" placeholder="اسم اللاعب الثاني" class="name-input">
+
+                <div class="setting-group">
+                    <label>عدد لاعبين الفريق:</label>
+                    <div class="row-options">
+                        <button class="option-btn player-count active" data-value="5">5 لاعبين</button>
+                        <button class="option-btn player-count" data-value="11">11 لاعب</button>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <label>طريقة المزاد:</label>
+                    <div class="column-options">
+                        <button class="option-btn auction-type active" data-value="public">مزاد علني</button>
+                        <button class="option-btn auction-type" data-value="hidden">مزاد مخفي</button>
+                    </div>
+                </div>
+
+                <button class="circle-btn start-auction-btn" id="start-auction-action">بدء المزاد</button>
+            </div>
+        </div>
+
+        <!-- شاشة ساحة المزاد (الجديدة) -->
+        <div id="auction-game-screen" class="screen hidden">
+            <!-- شاشة التمرير للمزاد المخفي (Pass Phone) -->
+            <div id="pass-phone-overlay" class="pass-overlay hidden">
+                <h1 id="pass-phone-text">...</h1>
+                <button id="btn-receive-phone" class="circle-btn">استلمت الهاتف</button>
+            </div>
+
+            <!-- معلومات الميزانية -->
+            <div class="budget-board">
+                <div class="budget-col">
+                    <h4 id="auc-p1-name-display">اللاعب 1</h4>
+                    <span id="auc-p1-budget" class="budget-amount">100M</span>
+                </div>
+                <div class="budget-col">
+                    <h4 id="auc-p2-name-display">اللاعب 2</h4>
+                    <span id="auc-p2-budget" class="budget-amount">100M</span>
+                </div>
+            </div>
+
+            <!-- الكارت المعروض للمزاد -->
+            <div class="auction-arena">
+                <h3 id="auc-position-text">المركز: ...</h3>
+                <div id="auc-revealed-card" class="choice-card revealed">
+                    <span id="auc-player-name">اسم اللاعب</span>
+                </div>
+            </div>
+
+            <!-- منطقة المزايدة -->
+            <div id="bidding-area" class="bidding-area">
+                <div class="bid-inputs">
+                    <div class="bid-col" id="bid-col-1">
+                        <label id="label-bid-p1">مزايدة اللاعب 1</label>
+                        <input type="number" id="auc-bid-p1" class="bid-input" min="1" placeholder="مثال: 15">
+                    </div>
+                    <div class="bid-col" id="bid-col-2">
+                        <label id="label-bid-p2">مزايدة اللاعب 2</label>
+                        <input type="number" id="auc-bid-p2" class="bid-input" min="1" placeholder="مثال: 12">
+                    </div>
+                </div>
+                <!-- منطقة المزايدة -->
+            <div id="bidding-area" class="bidding-area">
+                <div class="bid-inputs">
+                    <!-- ... الأكواد الخاصة بخانات الإدخال موجودة هنا ... -->
+                </div>
+                <button id="btn-confirm-bid" class="circle-btn submit-bid-btn">تأكيد المزايدة</button>
+            </div>
+            
+            <!-- حاوية كروت المزاد السحرية (الجديدة) -->
+            <div id="auc-cards-container" class="cards-container hidden" style="margin-top: 15px;"></div>
+            </div>
+            
+            <h3 id="auc-final-result" class="hidden" style="color: #f1c40f; text-align: center; margin-top: 20px;">...</h3>
+<button id="btn-finish-auction" class="circle-btn hidden" style="margin-top: 15px;">العودة للقائمة الرئيسية</button>        </div>
+
+<!-- شاشة إعداد الأسماء والعجلة الدوارة -->
+        <div id="setup-guess-screen" class="screen hidden">
+            <button class="back-btn">رجوع</button>
+            <h2>من سيبدأ؟</h2>
+            
+            <!-- قسم إدخال الأسماء -->
+            <div id="name-inputs" class="setup-section">
+                <input type="text" id="player1-input" placeholder="أدخل اسم اللاعب الأول" class="name-input">
+                <button id="next-to-player2" class="circle-btn small-btn">التالي</button>
+                
+                <input type="text" id="player2-input" placeholder="أدخل اسم اللاعب الثاني" class="name-input hidden">
+                <button id="start-wheel-btn" class="circle-btn small-btn hidden">لف العجلة!</button>
+            </div>
+
+            <!-- قسم العجلة الدوارة -->
+            <div id="wheel-section" class="setup-section hidden">
+                <div class="wheel-container">
+                    <div class="wheel-pointer">▼</div>
+                    <div id="wheel" class="wheel">
+                        <div class="wheel-half p1-half" id="wheel-p1-name">اللاعب 1</div>
+                        <div class="wheel-half p2-half" id="wheel-p2-name">اللاعب 2</div>
+                    </div>
+                </div>
+                <h3 id="wheel-result" class="hidden">...</h3>
+                <button id="go-to-game-btn" class="circle-btn small-btn hidden">ابدأ الجولة</button>
+            </div>
+        </div>
+      <!-- شاشة من اللاعب -->
+        <div id="guess-screen" class="screen hidden">
+            <button class="back-btn">رجوع</button>
+            
+            <!-- لوحة النتائج -->
+            <div class="score-board">
+                <span id="player1-score">اللاعب 1: 0</span>
+                <span id="player2-score">اللاعب 2: 0</span>
+            </div>
+
+            <!-- مؤشر الدور -->
+            <h3 id="turn-indicator">دور: اللاعب الأول</h3>
+            
+            <!-- اسم اللاعب العشوائي -->
+            <div class="player-card">
+                <h1 id="random-player-name">... جاري التفكير ...</h1>
+            </div>
+
+            <!-- أزرار التخمين -->
+            <div class="action-buttons">
+                <button class="guess-btn success" id="btn-success">تم التخمين</button>
+                <button class="guess-btn fail" id="btn-fail">فشل التخمين</button>
+            </div>
+            <!-- حاوية الكروت السحرية الجديدة (أضف هذا الجزء) -->
+            <div id="cards-container" class="cards-container">
+                <!-- الكروت ستظهر هنا برمجياً -->
+            </div>
+        </div>
+
+        <!-- شاشة الباكات -->
+        <div id="packs-screen" class="screen hidden">
+            <button class="back-btn">رجوع</button>
+            <h2>الباكات</h2>
+            <div class="content-area">
+                <p>هنا سنعرض الـ 3 باكات وأسئلة الذكاء الاصطناعي...</p>
+            </div>
+        </div>
+
+       <!-- شاشة اللاعب الخفي -->
+        <div id="hidden-screen" class="screen hidden">
+            <button class="back-btn">رجوع</button>
+            <h3 id="hidden-turn-indicator">دور: ...</h3>
+            
+            <!-- لوحة عرض التشكيلات -->
+            <div class="formations-board">
+                <div class="team-col">
+                    <h4 id="h-p1-name">اللاعب 1</h4>
+                    <ul id="h-p1-squad" class="squad-list"></ul>
+                </div>
+                <div class="team-col">
+                    <h4 id="h-p2-name">اللاعب 2</h4>
+                    <ul id="h-p2-squad" class="squad-list"></ul>
+                </div>
+            </div>
+
+            <!-- ساحة الاختيار (الكروت) -->
+            <div id="hidden-choice-area" class="choice-area">
+                <h4 id="position-needed-text">يجب اختيار: ...</h4>
+                <div class="cards-wrapper">
+                    <!-- الكارت المكشوف -->
+                    <div id="visible-card" class="choice-card">
+                        <span id="visible-name">اسم اللاعب</span>
+                    </div>
+                    <!-- الكارت الخفي -->
+                    <div id="hidden-card" class="choice-card mystery">
+                        <span id="hidden-name">؟</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<!-- الرسالة المنبثقة المخصصة -->
+        <div id="custom-popup" class="custom-popup">
+            هذا الطور تحت التطوير حالياً! 🚧
+        </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

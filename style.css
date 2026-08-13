@@ -1,0 +1,667 @@
+/* إعدادات عامة لتصفير المسافات */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* خلفية الشاشة الكبيرة (اللاب توب) وتوسيط الموبايل */
+body {
+    background-color: #2c3e50; /* لون خلفية اللاب توب */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* حاوية شاشة الموبايل (طولية وفي المنتصف) */
+.mobile-container {
+    width: 100%;
+    max-width: 400px; /* عرض شاشة الموبايل */
+    height: 800px; /* طول شاشة الموبايل */
+    max-height: 95vh;
+    
+    /* خلفية خضراء متدرجة توحي بملعب كرة القدم */
+    background: linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%);
+    
+    /* شكل وتصميم الموبايل الخارجي */
+    border: 8px solid #111; 
+    border-radius: 40px; /* حواف الموبايل الدائرية */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* القائمة الرئيسية وتوسيط العناصر بداخلها */
+#main-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* عنوان اللعبة */
+h2 {
+    color: white;
+    margin-bottom: 40px;
+    font-size: 2.2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+/* حاوية الأزرار لترتيبها فوق بعض */
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 25px; /* المسافة بين الأزرار */
+    align-items: center;
+}
+
+/* تصميم الأزرار (مستطيل كبير بحواف دائرية) */
+.circle-btn {
+    width: 85%; /* الزر عريض */
+    padding: 18px 20px; /* حجم الزر كبير من الداخل */
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(90deg, #d35400, #e67e22); /* لون برتقالي مميز */
+    border: none;
+    border-radius: 35px; /* الحواف الدائرية للمستطيل */
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+/* تأثير حركي عند المرور على الزر */
+.circle-btn:hover {
+    transform: scale(1.05); /* تكبير بسيط عند التأشير */
+    background: linear-gradient(90deg, #e67e22, #d35400);
+}
+
+/* إخفاء العناصر غير النشطة */
+.hidden {
+    display: none !important;
+}
+/* إعدادات الشاشات الداخلية */
+.screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* تنسيق زر الرجوع للقائمة الرئيسية */
+.back-btn {
+    position: absolute;
+    top: 25px; /* السطر ده اللي نزل الزرار لتحت شوية عشان ميبقاش لازق فوق */
+    right: 20px;
+    background: #c0392b;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+/* تأثير لما تضغط عليه */
+.back-btn:active {
+    transform: scale(0.95);
+}
+
+.back-btn:hover {
+    background-color: #e74c3c;
+}
+
+/* مساحة العمل الوهمية لنرى المساحة المتاحة */
+.content-area {
+    flex: 1; /* يأخذ باقي مساحة الشاشة بالكامل */
+    background: rgba(255, 255, 255, 0.1); /* خلفية شفافة بسيطة */
+    border: 2px dashed rgba(255, 255, 255, 0.4); /* إطار منقط */
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.2rem;
+}
+/* حاوية إعدادات المزاد */
+.auction-settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.setting-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.setting-group label {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* الخيارات التي تظهر بجانب بعضها بالعرض (5 و 11 لاعب) */
+.row-options {
+    display: flex;
+    gap: 15px;
+    width: 85%;
+    justify-content: center;
+}
+
+/* الخيارات التي تظهر فوق بعضها (المزاد العلني والمخفي) */
+.column-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 85%;
+    align-items: center;
+}
+
+/* تصميم الأزرار الفرعية (مستطيل بحواف دائرية) */
+.option-btn {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px; /* مستطيل بحواف دائرية */
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+/* تأثير عند اختيار العنصر (تحديد نشط) */
+.option-btn.active {
+    background: #27ae60; /* أخضر مميز للاختيار */
+    border-color: #2ecc71;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+}
+
+.option-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* زر بدء المزاد */
+.start-auction-btn {
+    margin-top: 15px;
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+
+.start-auction-btn:hover {
+    background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+/* تنسيقات شاشة التخمين */
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+#turn-indicator {
+    color: #f1c40f; /* لون أصفر مميز */
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.player-card {
+    background: rgba(255, 255, 255, 0.95);
+    color: #111;
+    width: 100%;
+    padding: 40px 20px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+#random-player-name {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.guess-btn {
+    padding: 15px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.1s;
+}
+
+.guess-btn:active {
+    transform: scale(0.95); /* تأثير الضغط على الزر */
+}
+
+.guess-btn.success {
+    background-color: #27ae60;
+}
+
+.guess-btn.fail {
+    background-color: #c0392b;
+}
+/* تنسيقات إدخال الأسماء */
+.setup-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.name-input {
+    width: 90%;
+    padding: 15px;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.2rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    outline: none;
+}
+
+.small-btn {
+    width: 60%;
+    padding: 12px;
+    font-size: 1.1rem;
+    border-radius: 20px;
+}
+
+/* تنسيقات العجلة الدوارة */
+.wheel-container {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    margin: 20px auto;
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: #f1c40f;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid white;
+    position: relative;
+    overflow: hidden;
+    transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1); 
+    display: flex;
+    flex-direction: column; /* تقسيم العجلة أعلى وأسفل */
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+.wheel-half {
+    width: 100%;
+    height: 50%; /* نصف الارتفاع */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.p1-half { background-color: #e74c3c; } /* لون اللاعب الأول (أحمر) */
+.p2-half { background-color: #3498db; } /* لون اللاعب الثاني (أزرق) */
+
+#wheel-result {
+    color: white;
+    font-size: 1.5rem;
+    margin-top: 15px;
+    text-align: center;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+/* تنسيقات حاوية الكروت الجديدة (لتملأ المساحة المتبقية) */
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px; /* مسافة بين الكروت */
+    margin-top: 20px;
+    width: 100%;
+    flex: 1; /* هذا السطر السحري يجعل الكروت تتمدد لتملأ الشاشة للأسفل */
+    padding-bottom: 20px;
+}
+
+/* تصميم الكارت المستطيل الجديد بخلفية ظل اللاعب */
+.power-card {
+    flex: 1; /* يجعل الكروت الثلاثة تنقسم العرض بالتساوي وتتمدد طولياً */
+    background-color: #151515; /* لون أسود أنيق */
+    
+    /* خلفية اللاعب (ظل/Silhouette) مرسومة برمجياً بشفافية خفيفة */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgba(255,255,255,0.07)'%3E%3Cpath d='M19 13.5c0 2.49-2.01 4.5-4.5 4.5S10 15.99 10 13.5 12.01 9 14.5 9s4.5 2.01 4.5 4.5M10.74 8.24L7.56 12l1.52 1.5L12 10.14v-2.31c0-.49-.24-.95-.65-1.25l-2.61-1.92L9.67 3.5l1.5 1.5-1.12 1.68 1.48 1.13c1.23.94 2.11 2.27 2.47 3.79l2.76-2.12c.3-.23.68-.32 1.05-.23l3.69 1c.53.14.85.69.71 1.22-.14.53-.69.85-1.22.71l-3.32-.9-2.54 1.95v5.54h-2v-3.79l-.88-.88-2.16 2.16v6h-2v-7l1.76-1.76-1.52-1.5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center bottom; /* تثبيت الظل في الأسفل */
+    background-size: 85%; /* حجم الظل */
+    
+    border-radius: 12px; /* حواف مستطيلة ناعمة */
+    border: 1px solid #2a2a2a; /* إطار خفيف جداً يبرز الكارت */
+    color: #f1f1f1;
+    font-size: 1.15rem;
+    font-weight: bold;
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* لرفع الكلام للأعلى لكي لا يغطي الظل بالكامل */
+    align-items: center;
+    padding: 25px 8px 10px 8px; /* مسافة من فوق للكلام */
+    
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    line-height: 1.6;
+    transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+    user-select: none;
+    overflow: hidden; /* لمنع خروج خلفية الظل عن الإطار */
+}
+
+/* تأثير عند المرور عليها أو لمسها */
+.power-card:hover {
+    transform: translateY(-8px);
+    background-color: #222; /* تفتيح بسيط جداً لإعطاء إحساس التفاعل */
+    border-color: #444;
+}
+
+/* تأثير الاختفاء الديناميكي عند الضغط عليها */
+.power-card.used {
+    transform: scale(0.8) translateY(50px); /* الكارت ينزل لتحت ويصغر قبل ما يختفي */
+    opacity: 0;
+}
+
+/* تأثير عند المرور عليها */
+.power-card:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: radial-gradient(circle at 30% 30%, #5dade2, #2980b9, #1a5276);
+}
+
+/* تأثير الاختفاء عند الضغط عليها */
+.power-card.used {
+    transform: scale(0) rotate(180deg);
+    opacity: 0;
+}
+/* تنسيقات شاشة اللاعب الخفي */
+#hidden-turn-indicator {
+    color: #f1c40f;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.formations-board {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.team-col {
+    width: 48%;
+    color: white;
+}
+
+.team-col h4 {
+    text-align: center;
+    background: #c0392b;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+#h-p2-name { background: #3498db; }
+
+.squad-list {
+    list-style: none;
+    font-size: 0.85rem;
+    padding: 0;
+}
+
+.squad-list li {
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 4px;
+    padding: 4px;
+    border-radius: 4px;
+    border-right: 3px solid #f1c40f;
+}
+
+.choice-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+#position-needed-text {
+    color: white;
+    margin-bottom: 15px;
+    background: #27ae60;
+    padding: 5px 15px;
+    border-radius: 15px;
+}
+
+.cards-wrapper {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+/* تصميم كروت الاختيار */
+.choice-card {
+    width: 130px;
+    height: 180px;
+    background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    transition: transform 0.2s;
+    border: 3px solid white;
+}
+
+.choice-card:hover { transform: translateY(-10px); }
+
+/* تصميم الكارت الخفي */
+.choice-card.mystery {
+    background: linear-gradient(135deg, #2c3e50, #1a252f);
+    color: #f1c40f;
+    font-size: 4rem;
+    border-color: #f1c40f;
+}
+
+/* الكارت بعد ما ينكشف */
+.choice-card.revealed {
+    background: linear-gradient(135deg, #f1c40f, #e67e22);
+    color: white;
+    font-size: 1.2rem;
+    transform: scale(1.05) rotateY(360deg); /* حركة التفاف رهيبة */
+    transition: transform 0.6s ease;
+}
+/* تنسيق الرسالة المنبثقة (Popup) */
+.custom-popup {
+    position: absolute;
+    bottom: 20px; /* تبدأ من أسفل الشاشة */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #c0392b; /* أحمر تحذيري أنيق */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    z-index: 1000;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    border: 2px solid #e74c3c;
+    width: 85%;
+    
+    /* إعدادات الإخفاء والحركة */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+/* الكلاس اللي هيشغل الحركة ويظهرها */
+.custom-popup.show {
+    opacity: 1;
+    visibility: visible;
+    bottom: 50px; /* ترتفع للأعلى قليلاً عند الظهور */
+}
+/* =========================================
+   تنسيقات طور المزاد
+========================================= */
+.budget-board {
+    display: flex;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border: 2px solid #f1c40f;
+}
+
+.budget-col {
+    text-align: center;
+    color: white;
+}
+
+.budget-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+.auction-arena {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#auc-position-text {
+    color: white;
+    background: #e67e22;
+    padding: 5px 20px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.bidding-area {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.bid-inputs {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.bid-col {
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+}
+
+.bid-col label {
+    color: white;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.bid-input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #34495e;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: bold;
+    outline: none;
+}
+
+.submit-bid-btn {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* شاشة التمرير للمزاد المخفي (تغطي الشاشة بالكامل) */
+.pass-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #2c3e50;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.pass-overlay h1 {
+    color: #f1c40f;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
