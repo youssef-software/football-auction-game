@@ -17,18 +17,17 @@
             <div class="menu-options">
                 <button class="circle-btn" id="btn-auction">المزايدة</button>
                 <button class="circle-btn" id="btn-guess">من اللاعب</button>
-                <button class="circle-btn" id="btn-packs">الباكات</button>
+                <button class="circle-btn" id="btn-high-pressure">الضغط العالي 💣</button>
                 <button class="circle-btn" id="btn-hidden">اللاعب الخفي</button>
             </div>
         </div>
 
-      <!-- شاشة إعدادات المزاد -->
+        <!-- شاشة إعدادات المزاد -->
         <div id="auction-screen" class="screen hidden">
             <button class="back-btn">رجوع</button>
             <h2>إعدادات المزاد</h2>
             
             <div class="auction-settings-container">
-                <!-- إدخال أسماء اللاعبين للمزاد -->
                 <input type="text" id="auc-p1-input" placeholder="اسم اللاعب الأول" class="name-input">
                 <input type="text" id="auc-p2-input" placeholder="اسم اللاعب الثاني" class="name-input">
 
@@ -52,15 +51,14 @@
             </div>
         </div>
 
-        <!-- شاشة ساحة المزاد (الجديدة) -->
+        <!-- شاشة ساحة المزاد -->
         <div id="auction-game-screen" class="screen hidden">
-            <!-- شاشة التمرير للمزاد المخفي (Pass Phone) -->
+            <!-- شاشة التمرير للمزاد المخفي -->
             <div id="pass-phone-overlay" class="pass-overlay hidden">
                 <h1 id="pass-phone-text">...</h1>
                 <button id="btn-receive-phone" class="circle-btn">استلمت الهاتف</button>
             </div>
 
-            <!-- معلومات الميزانية -->
             <div class="budget-board">
                 <div class="budget-col">
                     <h4 id="auc-p1-name-display">اللاعب 1</h4>
@@ -72,7 +70,6 @@
                 </div>
             </div>
 
-            <!-- الكارت المعروض للمزاد -->
             <div class="auction-arena">
                 <h3 id="auc-position-text">المركز: ...</h3>
                 <div id="auc-revealed-card" class="choice-card revealed">
@@ -80,7 +77,6 @@
                 </div>
             </div>
 
-            <!-- منطقة المزايدة -->
             <div id="bidding-area" class="bidding-area">
                 <div class="bid-inputs">
                     <div class="bid-col" id="bid-col-1">
@@ -92,36 +88,26 @@
                         <input type="number" id="auc-bid-p2" class="bid-input" min="1" placeholder="مثال: 12">
                     </div>
                 </div>
-                <!-- منطقة المزايدة -->
-            <div id="bidding-area" class="bidding-area">
-                <div class="bid-inputs">
-                    <!-- ... الأكواد الخاصة بخانات الإدخال موجودة هنا ... -->
-                </div>
                 <button id="btn-confirm-bid" class="circle-btn submit-bid-btn">تأكيد المزايدة</button>
             </div>
             
-            <!-- حاوية كروت المزاد السحرية (الجديدة) -->
             <div id="auc-cards-container" class="cards-container hidden" style="margin-top: 15px;"></div>
-            </div>
             
             <h3 id="auc-final-result" class="hidden" style="color: #f1c40f; text-align: center; margin-top: 20px;">...</h3>
-<button id="btn-finish-auction" class="circle-btn hidden" style="margin-top: 15px;">العودة للقائمة الرئيسية</button>        </div>
+            <button id="btn-finish-auction" class="circle-btn hidden" style="margin-top: 15px;">العودة للقائمة الرئيسية</button>        
+        </div>
 
-<!-- شاشة إعداد الأسماء والعجلة الدوارة -->
+        <!-- شاشة إعداد الأسماء والعجلة الدوارة -->
         <div id="setup-guess-screen" class="screen hidden">
             <button class="back-btn">رجوع</button>
             <h2>من سيبدأ؟</h2>
-            
-            <!-- قسم إدخال الأسماء -->
             <div id="name-inputs" class="setup-section">
                 <input type="text" id="player1-input" placeholder="أدخل اسم اللاعب الأول" class="name-input">
                 <button id="next-to-player2" class="circle-btn small-btn">التالي</button>
-                
                 <input type="text" id="player2-input" placeholder="أدخل اسم اللاعب الثاني" class="name-input hidden">
                 <button id="start-wheel-btn" class="circle-btn small-btn hidden">لف العجلة!</button>
             </div>
 
-            <!-- قسم العجلة الدوارة -->
             <div id="wheel-section" class="setup-section hidden">
                 <div class="wheel-container">
                     <div class="wheel-pointer">▼</div>
@@ -134,50 +120,29 @@
                 <button id="go-to-game-btn" class="circle-btn small-btn hidden">ابدأ الجولة</button>
             </div>
         </div>
-      <!-- شاشة من اللاعب -->
+
+        <!-- شاشة من اللاعب -->
         <div id="guess-screen" class="screen hidden">
             <button class="back-btn">رجوع</button>
-            
-            <!-- لوحة النتائج -->
             <div class="score-board">
                 <span id="player1-score">اللاعب 1: 0</span>
                 <span id="player2-score">اللاعب 2: 0</span>
             </div>
-
-            <!-- مؤشر الدور -->
             <h3 id="turn-indicator">دور: اللاعب الأول</h3>
-            
-            <!-- اسم اللاعب العشوائي -->
             <div class="player-card">
                 <h1 id="random-player-name">... جاري التفكير ...</h1>
             </div>
-
-            <!-- أزرار التخمين -->
             <div class="action-buttons">
                 <button class="guess-btn success" id="btn-success">تم التخمين</button>
                 <button class="guess-btn fail" id="btn-fail">فشل التخمين</button>
             </div>
-            <!-- حاوية الكروت السحرية الجديدة (أضف هذا الجزء) -->
-            <div id="cards-container" class="cards-container">
-                <!-- الكروت ستظهر هنا برمجياً -->
-            </div>
+            <div id="cards-container" class="cards-container"></div>
         </div>
 
-        <!-- شاشة الباكات -->
-        <div id="packs-screen" class="screen hidden">
-            <button class="back-btn">رجوع</button>
-            <h2>الباكات</h2>
-            <div class="content-area">
-                <p>هنا سنعرض الـ 3 باكات وأسئلة الذكاء الاصطناعي...</p>
-            </div>
-        </div>
-
-       <!-- شاشة اللاعب الخفي -->
+        <!-- شاشة اللاعب الخفي -->
         <div id="hidden-screen" class="screen hidden">
             <button class="back-btn">رجوع</button>
             <h3 id="hidden-turn-indicator">دور: ...</h3>
-            
-            <!-- لوحة عرض التشكيلات -->
             <div class="formations-board">
                 <div class="team-col">
                     <h4 id="h-p1-name">اللاعب 1</h4>
@@ -188,16 +153,12 @@
                     <ul id="h-p2-squad" class="squad-list"></ul>
                 </div>
             </div>
-
-            <!-- ساحة الاختيار (الكروت) -->
             <div id="hidden-choice-area" class="choice-area">
                 <h4 id="position-needed-text">يجب اختيار: ...</h4>
                 <div class="cards-wrapper">
-                    <!-- الكارت المكشوف -->
                     <div id="visible-card" class="choice-card">
                         <span id="visible-name">اسم اللاعب</span>
                     </div>
-                    <!-- الكارت الخفي -->
                     <div id="hidden-card" class="choice-card mystery">
                         <span id="hidden-name">؟</span>
                     </div>
@@ -205,11 +166,61 @@
             </div>
         </div>
 
-    </div>
-<!-- الرسالة المنبثقة المخصصة -->
-        <div id="custom-popup" class="custom-popup">
-            هذا الطور تحت التطوير حالياً! 🚧
+        <!-- شاشة إعدادات الضغط العالي -->
+        <div id="hp-setup-screen" class="screen hidden">
+            <button class="back-btn">رجوع</button>
+            <h2>إعدادات الضغط العالي 💣</h2>
+            <div id="hp-settings-section" class="auction-settings-container">
+                <div class="setting-group">
+                    <label>عدد اللاعبين:</label>
+                    <div class="row-options">
+                        <button class="option-btn hp-count active" data-value="2">2</button>
+                        <button class="option-btn hp-count" data-value="3">3</button>
+                        <button class="option-btn hp-count" data-value="4">4</button>
+                    </div>
+                </div>
+                <div class="setup-section" style="margin-top: 10px;">
+                    <input type="text" id="hp-p1-input" placeholder="اللاعب 1" class="name-input">
+                    <input type="text" id="hp-p2-input" placeholder="اللاعب 2" class="name-input">
+                    <input type="text" id="hp-p3-input" placeholder="اللاعب 3" class="name-input hidden">
+                    <input type="text" id="hp-p4-input" placeholder="اللاعب 4" class="name-input hidden">
+                </div>
+                <button class="circle-btn start-auction-btn" id="btn-start-hp-wheel">حفظ ولف العجلة</button>
+            </div>
+            <div id="hp-wheel-section" class="setup-section hidden">
+                <div class="wheel-container">
+                    <div class="wheel-pointer">▼</div>
+                    <div id="hp-wheel" class="wheel"></div>
+                </div>
+                <h3 id="hp-wheel-result" class="hidden">...</h3>
+                <button id="btn-go-hp-game" class="circle-btn small-btn hidden">ابدأ التحدي!</button>
+            </div>
         </div>
+
+        <!-- ساحة لعبة الضغط العالي -->
+        <div id="hp-game-screen" class="screen hidden">
+            <div id="hp-pass-overlay" class="pass-overlay hidden">
+                <h1 id="hp-pass-text" style="font-size: 2.5rem; margin-bottom: 20px;">...</h1>
+                <p style="color: white; margin-bottom: 30px; font-size: 1.2rem;">استعد، القنبلة ستعمل فوراً!</p>
+                <button id="btn-hp-ready" class="circle-btn" style="background: #27ae60;">أنا جاهز، ابدأ!</button>
+            </div>
+            <div id="hp-status-board" class="hp-status-board"></div>
+            <div class="hp-arena">
+                <h2 id="hp-current-turn-name" style="color: #f1c40f; margin-bottom: 20px;">دور: ...</h2>
+                <div class="hp-timer-container">
+                    <div id="hp-timer" class="hp-timer">100</div>
+                </div>
+                <div class="hp-question-box">
+                    <p id="hp-question-text">...</p>
+                </div>
+            </div>
+            <div class="action-buttons" style="margin-top: 20px;">
+                <button id="btn-hp-next" class="guess-btn success" style="padding: 20px; font-size: 1.5rem;">جاوبت.. التالي!</button>
+                <button id="btn-hp-skip" class="guess-btn fail" style="margin-top: 10px;">تغيير السؤال (خصم 10 ثواني)</button>
+            </div>
+        </div>
+
+    </div> <!-- هنا تم إغلاق حاوية التليفون بشكل صحيح! -->
 
     <script src="main.js"></script>
 </body>
