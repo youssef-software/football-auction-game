@@ -1,227 +1,425 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>لعبة المزاد والباكات</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <!-- حاوية بحجم شاشة التليفون -->
     <div class="mobile-container">
-        
-        <!-- القائمة الرئيسية -->
-        <div id="main-menu" class="screen">
-            <h2>اختر طور اللعب</h2>
-            <div class="menu-options">
-                <button class="circle-btn" id="btn-auction">المزايدة</button>
-                <button class="circle-btn" id="btn-guess">من اللاعب</button>
-                <button class="circle-btn" id="btn-high-pressure">الضغط العالي 💣</button>
-                <button class="circle-btn" id="btn-hidden">اللاعب الخفي</button>
+      <!-- القائمة الرئيسية -->
+      <div id="main-menu" class="screen">
+        <h2>اختر طور اللعب</h2>
+        <div class="menu-options">
+          <button class="circle-btn" id="btn-auction">المزايدة</button>
+          <button class="circle-btn" id="btn-guess">من اللاعب</button>
+          <button class="circle-btn" id="btn-high-pressure">
+            الضغط العالي 💣
+          </button>
+          <button class="circle-btn" id="btn-hidden">اللاعب الخفي</button>
+          <button
+            class="circle-btn"
+            id="btn-whoami"
+            style="background: linear-gradient(90deg, #8e44ad, #9b59b6)"
+          >
+            من أنا؟ 🕵️‍♂️
+          </button>
+        </div>
+      </div>
+
+      <!-- شاشة إعدادات المزاد -->
+      <div id="auction-screen" class="screen hidden">
+        <button class="back-btn">رجوع</button>
+        <h2>إعدادات المزاد</h2>
+
+        <div class="auction-settings-container">
+          <input
+            type="text"
+            id="auc-p1-input"
+            placeholder="اسم اللاعب الأول"
+            class="name-input"
+          />
+          <input
+            type="text"
+            id="auc-p2-input"
+            placeholder="اسم اللاعب الثاني"
+            class="name-input"
+          />
+
+          <div class="setting-group">
+            <label>عدد لاعبين الفريق:</label>
+            <div class="row-options">
+              <button class="option-btn player-count active" data-value="5">
+                5 لاعبين
+              </button>
+              <button class="option-btn player-count" data-value="11">
+                11 لاعب
+              </button>
             </div>
+          </div>
+
+          <div class="setting-group">
+            <label>طريقة المزاد:</label>
+            <div class="column-options">
+              <button
+                class="option-btn auction-type active"
+                data-value="public"
+              >
+                مزاد علني
+              </button>
+              <button class="option-btn auction-type" data-value="hidden">
+                مزاد مخفي
+              </button>
+            </div>
+          </div>
+
+          <button
+            class="circle-btn start-auction-btn"
+            id="start-auction-action"
+          >
+            بدء المزاد
+          </button>
+        </div>
+      </div>
+
+      <!-- شاشة ساحة المزاد -->
+      <div id="auction-game-screen" class="screen hidden">
+        <!-- شاشة التمرير للمزاد المخفي -->
+        <div id="pass-phone-overlay" class="pass-overlay hidden">
+          <h1 id="pass-phone-text">...</h1>
+          <button id="btn-receive-phone" class="circle-btn">
+            استلمت الهاتف
+          </button>
         </div>
 
-        <!-- شاشة إعدادات المزاد -->
-        <div id="auction-screen" class="screen hidden">
-            <button class="back-btn">رجوع</button>
-            <h2>إعدادات المزاد</h2>
-            
-            <div class="auction-settings-container">
-                <input type="text" id="auc-p1-input" placeholder="اسم اللاعب الأول" class="name-input">
-                <input type="text" id="auc-p2-input" placeholder="اسم اللاعب الثاني" class="name-input">
-
-                <div class="setting-group">
-                    <label>عدد لاعبين الفريق:</label>
-                    <div class="row-options">
-                        <button class="option-btn player-count active" data-value="5">5 لاعبين</button>
-                        <button class="option-btn player-count" data-value="11">11 لاعب</button>
-                    </div>
-                </div>
-
-                <div class="setting-group">
-                    <label>طريقة المزاد:</label>
-                    <div class="column-options">
-                        <button class="option-btn auction-type active" data-value="public">مزاد علني</button>
-                        <button class="option-btn auction-type" data-value="hidden">مزاد مخفي</button>
-                    </div>
-                </div>
-
-                <button class="circle-btn start-auction-btn" id="start-auction-action">بدء المزاد</button>
-            </div>
+        <div class="budget-board">
+          <div class="budget-col">
+            <h4 id="auc-p1-name-display">اللاعب 1</h4>
+            <span id="auc-p1-budget" class="budget-amount">100M</span>
+          </div>
+          <div class="budget-col">
+            <h4 id="auc-p2-name-display">اللاعب 2</h4>
+            <span id="auc-p2-budget" class="budget-amount">100M</span>
+          </div>
         </div>
 
-        <!-- شاشة ساحة المزاد -->
-        <div id="auction-game-screen" class="screen hidden">
-            <!-- شاشة التمرير للمزاد المخفي -->
-            <div id="pass-phone-overlay" class="pass-overlay hidden">
-                <h1 id="pass-phone-text">...</h1>
-                <button id="btn-receive-phone" class="circle-btn">استلمت الهاتف</button>
-            </div>
-
-            <div class="budget-board">
-                <div class="budget-col">
-                    <h4 id="auc-p1-name-display">اللاعب 1</h4>
-                    <span id="auc-p1-budget" class="budget-amount">100M</span>
-                </div>
-                <div class="budget-col">
-                    <h4 id="auc-p2-name-display">اللاعب 2</h4>
-                    <span id="auc-p2-budget" class="budget-amount">100M</span>
-                </div>
-            </div>
-
-            <div class="auction-arena">
-                <h3 id="auc-position-text">المركز: ...</h3>
-                <div id="auc-revealed-card" class="choice-card revealed">
-                    <span id="auc-player-name">اسم اللاعب</span>
-                </div>
-            </div>
-
-            <div id="bidding-area" class="bidding-area">
-                <div class="bid-inputs">
-                    <div class="bid-col" id="bid-col-1">
-                        <label id="label-bid-p1">مزايدة اللاعب 1</label>
-                        <input type="number" id="auc-bid-p1" class="bid-input" min="1" placeholder="مثال: 15">
-                    </div>
-                    <div class="bid-col" id="bid-col-2">
-                        <label id="label-bid-p2">مزايدة اللاعب 2</label>
-                        <input type="number" id="auc-bid-p2" class="bid-input" min="1" placeholder="مثال: 12">
-                    </div>
-                </div>
-                <button id="btn-confirm-bid" class="circle-btn submit-bid-btn">تأكيد المزايدة</button>
-            </div>
-            
-            <div id="auc-cards-container" class="cards-container hidden" style="margin-top: 15px;"></div>
-            
-            <h3 id="auc-final-result" class="hidden" style="color: #f1c40f; text-align: center; margin-top: 20px;">...</h3>
-            <button id="btn-finish-auction" class="circle-btn hidden" style="margin-top: 15px;">العودة للقائمة الرئيسية</button>        
+        <div class="auction-arena">
+          <h3 id="auc-position-text">المركز: ...</h3>
+          <div id="auc-revealed-card" class="choice-card revealed">
+            <span id="auc-player-name">اسم اللاعب</span>
+          </div>
         </div>
 
-        <!-- شاشة إعداد الأسماء والعجلة الدوارة -->
-        <div id="setup-guess-screen" class="screen hidden">
-            <button class="back-btn">رجوع</button>
-            <h2>من سيبدأ؟</h2>
-            <div id="name-inputs" class="setup-section">
-                <input type="text" id="player1-input" placeholder="أدخل اسم اللاعب الأول" class="name-input">
-                <button id="next-to-player2" class="circle-btn small-btn">التالي</button>
-                <input type="text" id="player2-input" placeholder="أدخل اسم اللاعب الثاني" class="name-input hidden">
-                <button id="start-wheel-btn" class="circle-btn small-btn hidden">لف العجلة!</button>
+        <div id="bidding-area" class="bidding-area">
+          <div class="bid-inputs">
+            <div class="bid-col" id="bid-col-1">
+              <label id="label-bid-p1">مزايدة اللاعب 1</label>
+              <input
+                type="number"
+                id="auc-bid-p1"
+                class="bid-input"
+                min="1"
+                placeholder="مثال: 15"
+              />
             </div>
-
-            <div id="wheel-section" class="setup-section hidden">
-                <div class="wheel-container">
-                    <div class="wheel-pointer">▼</div>
-                    <div id="wheel" class="wheel">
-                        <div class="wheel-half p1-half" id="wheel-p1-name">اللاعب 1</div>
-                        <div class="wheel-half p2-half" id="wheel-p2-name">اللاعب 2</div>
-                    </div>
-                </div>
-                <h3 id="wheel-result" class="hidden">...</h3>
-                <button id="go-to-game-btn" class="circle-btn small-btn hidden">ابدأ الجولة</button>
+            <div class="bid-col" id="bid-col-2">
+              <label id="label-bid-p2">مزايدة اللاعب 2</label>
+              <input
+                type="number"
+                id="auc-bid-p2"
+                class="bid-input"
+                min="1"
+                placeholder="مثال: 12"
+              />
             </div>
+          </div>
+          <button id="btn-confirm-bid" class="circle-btn submit-bid-btn">
+            تأكيد المزايدة
+          </button>
         </div>
 
-        <!-- شاشة من اللاعب -->
-        <div id="guess-screen" class="screen hidden">
-            <button class="back-btn">رجوع</button>
-            <div class="score-board">
-                <span id="player1-score">اللاعب 1: 0</span>
-                <span id="player2-score">اللاعب 2: 0</span>
-            </div>
-            <h3 id="turn-indicator">دور: اللاعب الأول</h3>
-            <div class="player-card">
-                <h1 id="random-player-name">... جاري التفكير ...</h1>
-            </div>
-            <div class="action-buttons">
-                <button class="guess-btn success" id="btn-success">تم التخمين</button>
-                <button class="guess-btn fail" id="btn-fail">فشل التخمين</button>
-            </div>
-            <div id="cards-container" class="cards-container"></div>
+        <div
+          id="auc-cards-container"
+          class="cards-container hidden"
+          style="margin-top: 15px"
+        ></div>
+
+        <h3
+          id="auc-final-result"
+          class="hidden"
+          style="color: #f1c40f; text-align: center; margin-top: 20px"
+        >
+          ...
+        </h3>
+        <button
+          id="btn-finish-auction"
+          class="circle-btn hidden"
+          style="margin-top: 15px"
+        >
+          العودة للقائمة الرئيسية
+        </button>
+      </div>
+
+      <!-- شاشة إعداد الأسماء والعجلة الدوارة -->
+      <div id="setup-guess-screen" class="screen hidden">
+        <button class="back-btn">رجوع</button>
+        <h2>من سيبدأ؟</h2>
+        <div id="name-inputs" class="setup-section">
+          <input
+            type="text"
+            id="player1-input"
+            placeholder="أدخل اسم اللاعب الأول"
+            class="name-input"
+          />
+          <button id="next-to-player2" class="circle-btn small-btn">
+            التالي
+          </button>
+          <input
+            type="text"
+            id="player2-input"
+            placeholder="أدخل اسم اللاعب الثاني"
+            class="name-input hidden"
+          />
+          <button id="start-wheel-btn" class="circle-btn small-btn hidden">
+            لف العجلة!
+          </button>
         </div>
 
-        <!-- شاشة اللاعب الخفي -->
-        <div id="hidden-screen" class="screen hidden">
-            <button class="back-btn">رجوع</button>
-            <h3 id="hidden-turn-indicator">دور: ...</h3>
-            <div class="formations-board">
-                <div class="team-col">
-                    <h4 id="h-p1-name">اللاعب 1</h4>
-                    <ul id="h-p1-squad" class="squad-list"></ul>
-                </div>
-                <div class="team-col">
-                    <h4 id="h-p2-name">اللاعب 2</h4>
-                    <ul id="h-p2-squad" class="squad-list"></ul>
-                </div>
+        <div id="wheel-section" class="setup-section hidden">
+          <div class="wheel-container">
+            <div class="wheel-pointer">▼</div>
+            <div id="wheel" class="wheel">
+              <div class="wheel-half p1-half" id="wheel-p1-name">اللاعب 1</div>
+              <div class="wheel-half p2-half" id="wheel-p2-name">اللاعب 2</div>
             </div>
-            <div id="hidden-choice-area" class="choice-area">
-                <h4 id="position-needed-text">يجب اختيار: ...</h4>
-                <div class="cards-wrapper">
-                    <div id="visible-card" class="choice-card">
-                        <span id="visible-name">اسم اللاعب</span>
-                    </div>
-                    <div id="hidden-card" class="choice-card mystery">
-                        <span id="hidden-name">؟</span>
-                    </div>
-                </div>
+          </div>
+          <h3 id="wheel-result" class="hidden">...</h3>
+          <button id="go-to-game-btn" class="circle-btn small-btn hidden">
+            ابدأ الجولة
+          </button>
+        </div>
+      </div>
+
+      <!-- شاشة من اللاعب -->
+      <div id="guess-screen" class="screen hidden">
+        <button class="back-btn">رجوع</button>
+        <div class="score-board">
+          <span id="player1-score">اللاعب 1: 0</span>
+          <span id="player2-score">اللاعب 2: 0</span>
+        </div>
+        <h3 id="turn-indicator">دور: اللاعب الأول</h3>
+        <div class="player-card">
+          <h1 id="random-player-name">... جاري التفكير ...</h1>
+        </div>
+        <div class="action-buttons">
+          <button class="guess-btn success" id="btn-success">تم التخمين</button>
+          <button class="guess-btn fail" id="btn-fail">فشل التخمين</button>
+        </div>
+        <div id="cards-container" class="cards-container"></div>
+      </div>
+
+      <!-- شاشة اللاعب الخفي -->
+      <div id="hidden-screen" class="screen hidden">
+        <button class="back-btn">رجوع</button>
+        <h3 id="hidden-turn-indicator">دور: ...</h3>
+        <div class="formations-board">
+          <div class="team-col">
+            <h4 id="h-p1-name">اللاعب 1</h4>
+            <ul id="h-p1-squad" class="squad-list"></ul>
+          </div>
+          <div class="team-col">
+            <h4 id="h-p2-name">اللاعب 2</h4>
+            <ul id="h-p2-squad" class="squad-list"></ul>
+          </div>
+        </div>
+        <div id="hidden-choice-area" class="choice-area">
+          <h4 id="position-needed-text">يجب اختيار: ...</h4>
+          <div class="cards-wrapper">
+            <div id="visible-card" class="choice-card">
+              <span id="visible-name">اسم اللاعب</span>
             </div>
+            <div id="hidden-card" class="choice-card mystery">
+              <span id="hidden-name">؟</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- شاشة إعدادات الضغط العالي -->
+      <div id="hp-setup-screen" class="screen hidden">
+        <button class="back-btn">رجوع</button>
+        <h2>إعدادات الضغط العالي 💣</h2>
+        <div id="hp-settings-section" class="auction-settings-container">
+          <div class="setting-group">
+            <label>عدد اللاعبين:</label>
+            <div class="row-options">
+              <button class="option-btn hp-count active" data-value="2">
+                2
+              </button>
+              <button class="option-btn hp-count" data-value="3">3</button>
+              <button class="option-btn hp-count" data-value="4">4</button>
+            </div>
+          </div>
+          <div class="setup-section" style="margin-top: 10px">
+            <input
+              type="text"
+              id="hp-p1-input"
+              placeholder="اللاعب 1"
+              class="name-input"
+            />
+            <input
+              type="text"
+              id="hp-p2-input"
+              placeholder="اللاعب 2"
+              class="name-input"
+            />
+            <input
+              type="text"
+              id="hp-p3-input"
+              placeholder="اللاعب 3"
+              class="name-input hidden"
+            />
+            <input
+              type="text"
+              id="hp-p4-input"
+              placeholder="اللاعب 4"
+              class="name-input hidden"
+            />
+          </div>
+          <button class="circle-btn start-auction-btn" id="btn-start-hp-wheel">
+            حفظ ولف العجلة
+          </button>
+        </div>
+        <div id="hp-wheel-section" class="setup-section hidden">
+          <div class="wheel-container">
+            <div class="wheel-pointer">▼</div>
+            <div id="hp-wheel" class="wheel"></div>
+          </div>
+          <h3 id="hp-wheel-result" class="hidden">...</h3>
+          <button id="btn-go-hp-game" class="circle-btn small-btn hidden">
+            ابدأ التحدي!
+          </button>
+        </div>
+      </div>
+
+      <!-- ساحة لعبة الضغط العالي -->
+      <div id="hp-game-screen" class="screen hidden">
+        <div id="hp-pass-overlay" class="pass-overlay hidden">
+          <h1 id="hp-pass-text" style="font-size: 2.5rem; margin-bottom: 20px">
+            ...
+          </h1>
+          <p style="color: white; margin-bottom: 30px; font-size: 1.2rem">
+            استعد، القنبلة ستعمل فوراً!
+          </p>
+          <button
+            id="btn-hp-ready"
+            class="circle-btn"
+            style="background: #27ae60"
+          >
+            أنا جاهز، ابدأ!
+          </button>
+        </div>
+        <div id="hp-status-board" class="hp-status-board"></div>
+        <div class="hp-arena">
+          <h2
+            id="hp-current-turn-name"
+            style="color: #f1c40f; margin-bottom: 20px"
+          >
+            دور: ...
+          </h2>
+          <div class="hp-timer-container">
+            <div id="hp-timer" class="hp-timer">100</div>
+          </div>
+          <div class="hp-question-box">
+            <p id="hp-question-text">...</p>
+          </div>
+        </div>
+        <div class="action-buttons" style="margin-top: 20px">
+          <button
+            id="btn-hp-next"
+            class="guess-btn success"
+            style="padding: 20px; font-size: 1.5rem"
+          >
+            جاوبت.. التالي!
+          </button>
+          <button
+            id="btn-hp-skip"
+            class="guess-btn fail"
+            style="margin-top: 10px"
+          >
+            تغيير السؤال (خصم 10 ثواني)
+          </button>
+        </div>
+      </div>
+
+      <!-- ... (باقي الشاشات السابقة كلها هنا) ... -->
+
+      <!-- شاشة طور من أنا؟ -->
+      <div id="whoami-screen" class="screen hidden">
+        <button class="back-btn">رجوع</button>
+
+        <div
+          class="score-board"
+          style="
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #9b59b6;
+          "
+        >
+          <span id="wai-p1-score" style="color: #9b59b6">اللاعب 1: 0/21</span>
+          <span id="wai-p2-score" style="color: #9b59b6">اللاعب 2: 0/21</span>
         </div>
 
-        <!-- شاشة إعدادات الضغط العالي -->
-        <div id="hp-setup-screen" class="screen hidden">
-            <button class="back-btn">رجوع</button>
-            <h2>إعدادات الضغط العالي 💣</h2>
-            <div id="hp-settings-section" class="auction-settings-container">
-                <div class="setting-group">
-                    <label>عدد اللاعبين:</label>
-                    <div class="row-options">
-                        <button class="option-btn hp-count active" data-value="2">2</button>
-                        <button class="option-btn hp-count" data-value="3">3</button>
-                        <button class="option-btn hp-count" data-value="4">4</button>
-                    </div>
-                </div>
-                <div class="setup-section" style="margin-top: 10px;">
-                    <input type="text" id="hp-p1-input" placeholder="اللاعب 1" class="name-input">
-                    <input type="text" id="hp-p2-input" placeholder="اللاعب 2" class="name-input">
-                    <input type="text" id="hp-p3-input" placeholder="اللاعب 3" class="name-input hidden">
-                    <input type="text" id="hp-p4-input" placeholder="اللاعب 4" class="name-input hidden">
-                </div>
-                <button class="circle-btn start-auction-btn" id="btn-start-hp-wheel">حفظ ولف العجلة</button>
-            </div>
-            <div id="hp-wheel-section" class="setup-section hidden">
-                <div class="wheel-container">
-                    <div class="wheel-pointer">▼</div>
-                    <div id="hp-wheel" class="wheel"></div>
-                </div>
-                <h3 id="hp-wheel-result" class="hidden">...</h3>
-                <button id="btn-go-hp-game" class="circle-btn small-btn hidden">ابدأ التحدي!</button>
-            </div>
+        <h3
+          id="wai-turn-indicator"
+          style="text-align: center; color: #f1c40f; margin: 15px 0"
+        >
+          دور: ...
+        </h3>
+
+        <div class="wai-card">
+          <div class="wai-points-badge">
+            النقاط الحالية: <span id="wai-current-points">7</span> 🏆
+          </div>
+          <h2 id="wai-player-name" class="hidden-name">؟؟؟</h2>
+          <ul id="wai-hints-list" class="hints-list">
+            <!-- التلميحات ستضاف هنا برمجياً -->
+          </ul>
         </div>
 
-        <!-- ساحة لعبة الضغط العالي -->
-        <div id="hp-game-screen" class="screen hidden">
-            <div id="hp-pass-overlay" class="pass-overlay hidden">
-                <h1 id="hp-pass-text" style="font-size: 2.5rem; margin-bottom: 20px;">...</h1>
-                <p style="color: white; margin-bottom: 30px; font-size: 1.2rem;">استعد، القنبلة ستعمل فوراً!</p>
-                <button id="btn-hp-ready" class="circle-btn" style="background: #27ae60;">أنا جاهز، ابدأ!</button>
-            </div>
-            <div id="hp-status-board" class="hp-status-board"></div>
-            <div class="hp-arena">
-                <h2 id="hp-current-turn-name" style="color: #f1c40f; margin-bottom: 20px;">دور: ...</h2>
-                <div class="hp-timer-container">
-                    <div id="hp-timer" class="hp-timer">100</div>
-                </div>
-                <div class="hp-question-box">
-                    <p id="hp-question-text">...</p>
-                </div>
-            </div>
-            <div class="action-buttons" style="margin-top: 20px;">
-                <button id="btn-hp-next" class="guess-btn success" style="padding: 20px; font-size: 1.5rem;">جاوبت.. التالي!</button>
-                <button id="btn-hp-skip" class="guess-btn fail" style="margin-top: 10px;">تغيير السؤال (خصم 10 ثواني)</button>
-            </div>
+        <div class="action-buttons">
+          <button
+            id="btn-wai-next-hint"
+            class="circle-btn"
+            style="
+              width: 100%;
+              border-radius: 10px;
+              background: #3498db;
+              margin-bottom: 10px;
+            "
+          >
+            تلميح إضافي (يقلل نقطة) 🔽
+          </button>
+          <div style="display: flex; gap: 10px">
+            <button
+              id="btn-wai-guess"
+              class="guess-btn success"
+              style="flex: 1"
+            >
+              عرفته! ✅
+            </button>
+            <button id="btn-wai-fail" class="guess-btn fail" style="flex: 1">
+              ماعرفتوش ❌
+            </button>
+          </div>
         </div>
-
-    </div> <!-- هنا تم إغلاق حاوية التليفون بشكل صحيح! -->
+      </div>
+    </div>
+    <!-- 🔴 قفلة حاوية التليفون (mobile-container) لازم تكون هنا في الآخر! 🔴 -->
 
     <script src="main.js"></script>
-</body>
+  </body>
 </html>
