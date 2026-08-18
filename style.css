@@ -848,3 +848,168 @@ h2 {
     transform: translateY(0);
   }
 }
+/* =========================================
+   تنسيقات طور كاشف الكذب (مضغوطة لظهور الكروت)
+========================================= */
+#lie-detector-screen {
+  overflow-y: auto !important;
+  max-height: 100%;
+  padding: 10px 10px 30px 10px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-identity-card {
+  background: #1e272e;
+  color: #f1c40f;
+  border: 2px dashed #f1c40f;
+  padding: 8px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.ld-statements-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ld-card {
+  background: rgba(255, 255, 255, 0.95);
+  color: #2c3e50;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 0.88rem;
+  line-height: 1.3;
+  cursor: pointer;
+  border-right: 5px solid #7f8c8d;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition:
+    transform 0.2s,
+    background 0.3s;
+}
+
+.ld-card:active {
+  transform: scale(0.98);
+}
+
+.ld-card.is-lie {
+  background: #e74c3c !important;
+  color: white !important;
+  border-right-color: #962d22 !important;
+  animation: shakeLie 0.4s ease;
+}
+
+.ld-card.is-truth {
+  background: #27ae60 !important;
+  color: white !important;
+  border-right-color: #1e8449 !important;
+}
+
+@keyframes shakeLie {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.ld-powers-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 6px 2px;
+  margin-bottom: 8px;
+  min-height: 42px;
+}
+
+.ld-powers-bar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.ld-powers-bar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.ld-power-btn {
+  flex: 0 0 auto;
+  background: #34495e;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ld-power-btn.used {
+  opacity: 0.4;
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+.ld-actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+}
+
+/* =========================================
+   تنسيقات كروت كاشف الكذب المربعة
+========================================= */
+.ld-cards-deck {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.ld-square-card {
+  flex: 1;
+  max-width: 95px;
+  height: 80px;
+  background: #18191a;
+  color: #ffffff;
+  border: 2px solid #2d3436;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+  user-select: none;
+  padding: 4px;
+  line-height: 1.2;
+}
+
+.ld-square-card:active {
+  transform: scale(0.95);
+  border-color: #f1c40f;
+}
+
+.ld-square-card span.icon {
+  font-size: 1.3rem;
+  margin-bottom: 3px;
+}

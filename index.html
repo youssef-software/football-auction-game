@@ -18,7 +18,13 @@
           <button class="circle-btn" id="btn-high-pressure">
             الضغط العالي 💣
           </button>
-          <button class="circle-btn" id="btn-hidden">اللاعب الخفي</button>
+          <button
+            class="circle-btn"
+            id="btn-lie-detector"
+            style="background: linear-gradient(90deg, #c0392b, #e74c3c)"
+          >
+            كاشف الكذب 🕵️‍♂️
+          </button>
           <button
             class="circle-btn"
             id="btn-whoami"
@@ -220,29 +226,92 @@
         <div id="cards-container" class="cards-container"></div>
       </div>
 
-      <!-- شاشة اللاعب الخفي -->
-      <div id="hidden-screen" class="screen hidden">
+      <!-- شاشة كاشف الكذب (5 حقائق وكذبة) -->
+      <div id="lie-detector-screen" class="screen hidden">
         <button class="back-btn">رجوع</button>
-        <h3 id="hidden-turn-indicator">دور: ...</h3>
-        <div class="formations-board">
-          <div class="team-col">
-            <h4 id="h-p1-name">اللاعب 1</h4>
-            <ul id="h-p1-squad" class="squad-list"></ul>
-          </div>
-          <div class="team-col">
-            <h4 id="h-p2-name">اللاعب 2</h4>
-            <ul id="h-p2-squad" class="squad-list"></ul>
+
+        <div
+          class="score-board"
+          style="
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #e74c3c;
+          "
+        >
+          <div
+            class="score-board"
+            style="
+              background: rgba(0, 0, 0, 0.5);
+              padding: 10px;
+              border-radius: 10px;
+              border: 2px solid #e74c3c;
+            "
+          >
+            <span id="ld-p1-score" style="color: #e74c3c">اللاعب 1: 0/15</span>
+            <span id="ld-p2-score" style="color: #3498db">اللاعب 2: 0/15</span>
           </div>
         </div>
-        <div id="hidden-choice-area" class="choice-area">
-          <h4 id="position-needed-text">يجب اختيار: ...</h4>
-          <div class="cards-wrapper">
-            <div id="visible-card" class="choice-card">
-              <span id="visible-name">اسم اللاعب</span>
-            </div>
-            <div id="hidden-card" class="choice-card mystery">
-              <span id="hidden-name">؟</span>
-            </div>
+
+        <h3
+          id="ld-turn-indicator"
+          style="text-align: center; color: #f1c40f; margin: 10px 0"
+        >
+          دور: ...
+        </h3>
+
+        <!-- كارت هوية اللاعب المجهول -->
+        <div class="player-identity-card">
+          <span id="ld-player-name">اللاعب: ؟؟؟؟؟</span>
+        </div>
+
+        <!-- البطاقات الـ 6 -->
+        <div id="ld-statements-container" class="ld-statements-grid"></div>
+
+        <!-- حاوية الكروت الـ 3 المربعة العشوائية -->
+        <div id="ld-player-cards-container" class="ld-cards-deck"></div>
+
+        <!-- أزرار التحكم النهائي (3 أزرار مدمجة) -->
+        <div id="ld-actions-area" class="ld-actions-container">
+          <button
+            id="btn-ld-reveal-player"
+            class="circle-btn"
+            style="
+              width: 100%;
+              border-radius: 8px;
+              background: #f39c12;
+              padding: 10px;
+              font-size: 1rem;
+              margin-bottom: 6px;
+            "
+          >
+            كشف اسم اللاعب 👁️
+          </button>
+          <div style="display: flex; gap: 8px; width: 100%">
+            <button
+              id="btn-ld-player-correct"
+              class="guess-btn success"
+              style="
+                flex: 1;
+                padding: 12px;
+                font-size: 1rem;
+                border-radius: 8px;
+              "
+            >
+              عرفت اللاعب ✅ (+3)
+            </button>
+            <button
+              id="btn-ld-fail"
+              class="guess-btn fail"
+              style="
+                flex: 1;
+                padding: 12px;
+                font-size: 1rem;
+                border-radius: 8px;
+              "
+            >
+              فشلت ❌
+            </button>
           </div>
         </div>
       </div>
